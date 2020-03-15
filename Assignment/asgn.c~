@@ -1,0 +1,165 @@
+/**
+ * Reads in a file and stores it in a hash table using either d
+ *
+ * @author
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "mylib.h"
+#include "htable.h"
+#include <getopt.h>
+#include <time.h>
+
+static void print_info(int freq, char *word){
+    printf("%-4d %s\n", freq, word);
+}
+
+int main(int argc, char **argv){
+
+    clock_t start_1, end_1, start_2, end_2;
+    htable h = NULL;
+    double tableFill, tableSearch;
+    char option;
+    char *fileName;
+    char word[256];
+
+    const char *optstring = "c:deps:t:h";
+    FILE *file;
+    
+    int tableSize = 113;
+    int num = 0;
+    int wordsUnknown = 0;
+    int spellcheck = 0;
+    int hashType = 0;
+    int printTable = 0;
+    int printStats = 0;
+    int snapshots = 0;
+    int numSnaps = 0;
+    int ifHelp = 0;
+    
+    file = NULL;
+    fileName = NULL;
+    
+    tableFill = 0;
+    tableSearch = 0;
+
+    while ((option = getopt(argc, argv, optstring)) != EOF){
+        switch (option){
+            case 'c':
+                
+                fileName = optarg;
+                spellcheck = 1;
+
+                break;
+            case 'd':
+                
+                hashType = 1;
+                
+                break;
+            case 'e':
+                
+                printTable= 1;
+                
+                break;
+            case 'p':
+
+                printStats = 1;
+                
+                break;
+            case 's':
+
+                snapshots = 1;
+                numSnaps = atoi(optarg);
+                
+                break;
+            case 't':
+                
+                tableSize = atoi(optarg);
+                
+                if (tableSize == 0){
+                    tableSize = 2;
+                }
+                
+                break;
+            case 'h':
+
+                ifHelp = 1;
+                
+                break;
+                
+            default:
+
+                ifHelp = 1;
+                
+                break;
+        }
+    }
+    
+    print_help(ifHelp);
+    
+    num = tableSize;
+    while (find_prime(num) == 0){
+        num++;
+    }
+    tableSize = num;
+    
+    start_1 = clock();
+    
+    if(hashType){
+        h = htable_new(tableSize, DOUBLE_H);
+    }else{
+        h = htable_new(tableSize, LINEAR_P);
+    }
+    
+    while (getword(word, sizeof word, stdin) != EOF){
+        htable_insert(h, word);
+    }
+    
+    end_1 = clock();
+
+    if (printTable){
+        htable_print_entire_table(h, stderr);
+        htable_print(h, print_info);
+    }
+
+    if(spellcheck){
+        file = open_file(fileName);
+        
+        start_2 = clock();
+        while (getword(word, sizeof word, file) != EOF){
+            if (htable_search(h, word) == 0){
+                wordsUnknown++;
+                fprintf(stdout, "%s\n", word);
+            }
+        }
+        end_2 = clock();
+
+        tableSearch = ((end_2 - start_2) / (double)CLOCKS_PER_SEC);
+        tableFill = ((end_1 - start_1) / (double)CLOCKS_PER_SEC);
+
+
+        fprintf(stderr, "Fill time     : %3f\n", tableFill);
+        fprintf(stderr, "Search time   : %3f\n", tableSearch);
+        fprintf(stderr, "Unknown words = %d\n", wordsUnknown);
+
+        fclose(file);
+        
+    }
+
+    if (printStats && snapshots){
+        htable_print_stats(h, stdout, numSnaps);
+    }
+    else if (printStats){
+        numSnaps = 10;
+        htable_print_stats(h, stdout, numSnaps);
+    }
+
+    htable_free(h);
+    return EXIT_SUCCESS;
+}
+
+
+    
+    

@@ -1,0 +1,23 @@
+Name: Kezia Somerville-Petch
+Student ID: 8092794
+Group No: 12
+
+My contributions to the assignment
+Effort: 100%
+Usefulness: 90%
+
+The contributions of Hayley Sleeman
+Effort: 100%
+Usefulness: 75%
+
+The contributions of Yashna
+Effort: 80%
+Usefulness: 50%
+
+My thoughts on the positives and negatives of working in a group.
+
+I enjoyed being able to meet another like-minded person and make a new friend! I also enjoyed being able to see different perspectives on the assignment and how to solve specific issues. 
+I thought it was difficult working on code together, as we required all code to be the same even though we were all working on other computers, thus we had to send code back and forth a lot. 
+
+I enjoyed this assignment as it was challenging and interesting though i wished that there was a check-asgn command avaliable as it made it very hard to check if the code functioned properly, as there were so many cases to check in combination with each other. Even though we spent many hours on this assignment it still didn't function exactly as the sample-asgn. I wish we were better informed about what to do when given -t and -s without an input number, as it seemed as though the sample-asgn had default values for table size and snapshot number when no number was input. We tried to mimic these sample-asgn 'default' values.
+
