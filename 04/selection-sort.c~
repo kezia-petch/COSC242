@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARRAY_MAX 10
+
+/**
+ * A Selection sort implementation.
+ *
+ * @author Kezia Somerville-Petch
+ */
+
+void selection_sort (int *a, int n){
+    int p, q, temp;
+    int min = 0;
+    for (q = 0; q < n-1; q++){    
+        for (p = 0; p < n-1; p++){
+            temp = a[p];
+            if (temp < min){
+                min = temp;
+            }
+        }
+        a[p] = min;
+    }    
+}
+
+
+    
+int main (void){
+    int my_array[ARRAY_MAX];
+    int i, count = 0;
+
+    while (count < ARRAY_MAX && 1 == scanf("%d", &my_array[count])){
+        count++;
+    }
+
+    insertion_sort(my_array, count);
+    for (i = 0; i < count; i++){
+        printf("%d\n", my_array[i]);
+    }
+
+    return EXIT_SUCCESS;
+}

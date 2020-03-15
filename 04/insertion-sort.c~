@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ARRAY_MAX 10
+
+/**
+ * A Insertion sort implementation.
+ *
+ * @author Kezia Somerville-Petch
+ */
+
+void insertion_sort (int *a, int n){
+    int p, q, key;
+    for (p = 1; p < n; p++){
+        key = a[p];
+        q = p-1;
+        while (q >= 0 && a[q] > key){
+            a[q+1] = a[q];
+            q = q-1;
+        }
+        a[q+1] = key;
+    }
+}
+
+int main (void){
+    int my_array[ARRAY_MAX];
+    int i, count = 0;
+
+    while (count < ARRAY_MAX && 1 == scanf("%d", &my_array[count])){
+        count++;
+    }
+
+    insertion_sort(my_array, count);
+    for (i = 0; i < count; i++){
+        printf("%d\n", my_array[i]);
+    }
+
+    return EXIT_SUCCESS;
+}
