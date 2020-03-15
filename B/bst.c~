@@ -1,0 +1,44 @@
+
+
+bst bst_new(){
+    return null;
+    
+}
+
+bst bst_insert(bst b, char *str){
+    if(b == NULL){
+        b = emalloc(sizeof * b);
+        b->key = emalloc((strlen(str) + 1)* sizeof b->key[0]);
+        strcpy(b->key, str);
+        b->left = NULL;
+        b->right = NULL;
+        return b;
+    }
+    if(strcmp(b->key, str) > 0){
+        b->left = bst_insert(b->left, str);
+    } else{
+        b->right = bst_insert(b->right, str);
+    }
+    return b;
+}
+
+int bst_search(bst b, char *str){
+    if(b == NULL){
+        return 0;
+    }
+    if(strcmp(b->key, str) == 0){
+        return 1;
+    } else{
+        if(
+}
+
+void bst_inorder(bst b, void f(char *str)){
+    
+    
+}
+
+void bst_preorder(bst b, void f(char *str)){
+    
+
+bst bst_free(bst b){
+   
